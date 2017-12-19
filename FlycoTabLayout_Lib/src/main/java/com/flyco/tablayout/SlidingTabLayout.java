@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -35,6 +36,8 @@ import java.util.Collections;
 
 /** 滑动TabLayout,对于ViewPager的依赖性强 */
 public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
+
+    private static final String TAG = "SlidingTabActivity";
     private Context mContext;
     private ViewPager mViewPager;
     private ArrayList<String> mTitles;
@@ -327,6 +330,15 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
 
     @Override
     public void onPageSelected(int position) {
+        int size = mViewPager.getAdapter().getCount();
+        if(position == size-1){
+            position = 1;
+        }else if(position ==0){
+            position = size-2;
+        }
+        mCurrentTab = position;
+        mViewPager.setCurrentItem(mCurrentTab,false);
+        scrollToCurrentTab();
         updateTabSelection(position);
     }
 
@@ -362,14 +374,22 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     }
 
     private void updateTabSelection(int position) {
+        Log.e(TAG, "updateTabSelection: "+position );
+//        String title = ((TextView)mTabsContainer.getChildAt(position).findViewById(R.id.tv_tab_title)).getText().toString();
         for (int i = 0; i < mTabCount; ++i) {
             View tabView = mTabsContainer.getChildAt(i);
-            final boolean isSelect = i == position;
+
             TextView tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
 
             if (tab_title != null) {
+
+                boolean isSelect = position%5 == i%5;
+                if(isSelect){
+                    Log.e(TAG, "updateTabSelection: current——"+i );
+                }
                 tab_title.setTextColor(isSelect ? mTextSelectColor : mTextUnselectColor);
                 if (mTextBold == TEXT_BOLD_WHEN_SELECT) {
+                    Log.e(TAG, "setFakeBoldText: "+i+"——isSelect："+isSelect );
                     tab_title.getPaint().setFakeBoldText(isSelect);
                 }
             }

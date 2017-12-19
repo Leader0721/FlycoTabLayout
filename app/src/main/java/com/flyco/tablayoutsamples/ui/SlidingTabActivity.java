@@ -2,12 +2,14 @@ package com.flyco.tablayoutsamples.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,11 +22,12 @@ import com.flyco.tablayoutsamples.utils.ViewFindUtils;
 import java.util.ArrayList;
 
 public class SlidingTabActivity extends AppCompatActivity implements OnTabSelectListener {
+    private static final String TAG = "SlidingTabActivity";
     private Context mContext = this;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private final String[] mTitles = {
-            "热门", "iOS", "Android"
-            , "前端", "后端", "设计", "工具资源"
+            "国内","北京", "短视频", "全球","国外", "国内",
+            "北京", "短视频", "全球","国外", "国内","北京"
     };
     private MyPagerAdapter mAdapter;
 
@@ -75,7 +78,20 @@ public class SlidingTabActivity extends AppCompatActivity implements OnTabSelect
         tabLayout_8.setViewPager(vp, mTitles, this, mFragments);
         tabLayout_9.setViewPager(vp);
         tabLayout_10.setViewPager(vp);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            tabLayout_9.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    int width = v.getRight()-v.getLeft();
+                    Log.e(TAG, "onScrollChange: "+scrollX );
+                    if( scrollX<width*1/6 ){
+                        v.scrollTo(width*5/6,scrollY);
+                    }else if(scrollX>width*5/6){
+                        v.scrollTo(scrollX-width*1/6,scrollY);
+                    }
+                }
+            });
+        }
         vp.setCurrentItem(4);
 
         tabLayout_1.showDot(4);
