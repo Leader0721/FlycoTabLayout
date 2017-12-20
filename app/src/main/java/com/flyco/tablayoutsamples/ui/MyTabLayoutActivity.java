@@ -64,8 +64,8 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
         MyPagerAdapter mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(this);
-        tablayout.scrollTo(Integer.MAX_VALUE/2,0);
-        mViewPager.setCurrentItem(3);
+        tablayout. scrollToPosition(250);//开始时的偏移量
+//        mViewPager.setCurrentItem(3);
 
     }
 
@@ -117,7 +117,7 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
         public int currentItem = 0;
         private String[] mTitleData = {
 
-                "国内","北京", "短视频", "全球","国外", "国内","北京"
+                "北京", "短视频", "全球","国外", "国内"
         };
 
         @Override
@@ -148,7 +148,7 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
 
         @Override
         public int getItemCount() {
-            return  Integer.MAX_VALUE;
+            return  500;
         }
 
         public void setCurrentItem(int i){
