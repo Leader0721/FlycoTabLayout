@@ -49,7 +49,7 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
         WindowManager wm = (WindowManager) this
                 .getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
-        itemWidth = width/4;
+        itemWidth = width/5;
         rvAdapter = new MyAdapter();
         tablayout.setAdapter(rvAdapter);
 
@@ -64,9 +64,15 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
         MyPagerAdapter mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(this);
-        tablayout.scrollTo(Integer.MAX_VALUE/2,0);
+        tablayout.scrollToPosition(250);
         mViewPager.setCurrentItem(3);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tablayout.scrollTo(100,0);
     }
 
     @Override
@@ -117,7 +123,7 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
         public int currentItem = 0;
         private String[] mTitleData = {
 
-                "国内","北京", "短视频", "全球","国外", "国内","北京"
+                "北京", "短视频", "全球","国外", "国内"
         };
 
         @Override
@@ -148,35 +154,48 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
 
         @Override
         public int getItemCount() {
-            return  Integer.MAX_VALUE;
+            return  500;
         }
 
         public void setCurrentItem(int i){
-
+            if(i == 5){
+                i =0;
+            }
             this.currentItem = i;
             notifyDataSetChanged();
+            int total = 250+i;
+
             int firstposition = linearLayoutManager.findFirstVisibleItemPosition();
-            int currentPosition = firstposition % mTitles.length;
-            int sclloX = 0;
-            int dex = Math.abs(currentItem-currentPosition);
-            switch (dex){
-                case 0:
-                    sclloX = itemWidth*3/2;
-                    break;
-                case 1:
-                    sclloX = itemWidth*1/2;
-                    break;
-                case 2:
-                    sclloX = itemWidth*-1/2;
-                    break;
-                case 3:
-                    sclloX = itemWidth*-3/2;
-                    break;
-                case 4:
-                    sclloX = itemWidth*5/2;
-                    break;
+            if(total>firstposition){
+                total-=4;
             }
-            tablayout.scrollTo(sclloX,0);
+            tablayout.scrollToPosition(total);
+            int sclloX = itemWidth*3/2;;
+            if(firstposition<250+i){
+                sclloX -= 3 * itemWidth;
+            }
+//            int currentPosition = firstposition % mTitles.length;
+//
+//            int dex = Math.abs(currentItem-currentPosition);
+//            switch (dex){
+//                case 0:
+//                    sclloX = itemWidth*3/2;
+//                    break;
+//                case 1:
+//                    sclloX = itemWidth*1/2;
+//                    break;
+//                case 2:
+//                    sclloX = itemWidth*-1/2;
+//                    break;
+//                case 3:
+//                    sclloX = itemWidth*-3/2;
+//                    break;
+//                case 4:
+//                    sclloX = itemWidth*5/2;
+//                    break;
+//            }
+//            Log.e(TAG, "setCurrentItem: sclloX"+sclloX );
+//            tablayout.scrollBy(sclloX,0);
         }
 
         public int getCurrentItem(){
