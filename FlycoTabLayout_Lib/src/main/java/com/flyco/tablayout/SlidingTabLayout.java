@@ -338,7 +338,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         }
         mCurrentTab = position;
         mViewPager.setCurrentItem(mCurrentTab,false);
-        scrollToCurrentTab();
+//        scrollToCurrentTab();
         updateTabSelection(position);
     }
 
@@ -355,7 +355,12 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         int offset = (int) (mCurrentPositionOffset * mTabsContainer.getChildAt(mCurrentTab).getWidth());
         /**当前Tab的left+当前Tab的Width乘以positionOffset*/
         int newScrollX = mTabsContainer.getChildAt(mCurrentTab).getLeft() + offset;
-
+        if(mCurrentTab>7){
+            mCurrentTab = mCurrentTab-5;
+        }else if(mCurrentTab<3){
+            mCurrentTab = mCurrentTab+5;
+        }
+        Log.e(TAG, "scrollToCurrentTab: mCurrentTab——"+mCurrentTab+"  offset——"+offset );
         if (mCurrentTab > 0 || offset > 0) {
             /**HorizontalScrollView移动到当前tab,并居中*/
             newScrollX -= getWidth() / 2 - getPaddingLeft();
