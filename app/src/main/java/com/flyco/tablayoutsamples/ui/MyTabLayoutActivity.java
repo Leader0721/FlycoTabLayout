@@ -78,11 +78,12 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+
     }
 
     @Override
     public void onPageSelected(int position) {
-
+        selectedView.setVisibility(View.GONE);
         if(position == 0){
             position = mTitles.length-2;
         }else if(position == mTitles.length-1){
@@ -150,6 +151,16 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
             }
 
             holder.titleView.setText(mTitles[position]);
+            if(position == 0){
+                position = 5;
+            }
+            final int tempposition = position;
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   mViewPager.setCurrentItem(tempposition);
+                }
+            });
         }
 
         @Override
@@ -162,40 +173,14 @@ public class MyTabLayoutActivity extends AppCompatActivity implements ViewPager.
                 i =0;
             }
             this.currentItem = i;
+            Log.e(TAG, "setCurrentItem: currentItem——"+i );
             notifyDataSetChanged();
-            int total = 250+i;
+            if(currentItem == -1){
+                return;
+            }
+            int total = 250 + i;
+            linearLayoutManager.scrollToPositionWithOffset(total,itemWidth*2);
 
-            int firstposition = linearLayoutManager.findFirstVisibleItemPosition();
-            if(total>firstposition){
-                total-=4;
-            }
-            tablayout.scrollToPosition(total);
-            int sclloX = itemWidth*3/2;;
-            if(firstposition<250+i){
-                sclloX -= 3 * itemWidth;
-            }
-//            int currentPosition = firstposition % mTitles.length;
-//
-//            int dex = Math.abs(currentItem-currentPosition);
-//            switch (dex){
-//                case 0:
-//                    sclloX = itemWidth*3/2;
-//                    break;
-//                case 1:
-//                    sclloX = itemWidth*1/2;
-//                    break;
-//                case 2:
-//                    sclloX = itemWidth*-1/2;
-//                    break;
-//                case 3:
-//                    sclloX = itemWidth*-3/2;
-//                    break;
-//                case 4:
-//                    sclloX = itemWidth*5/2;
-//                    break;
-//            }
-//            Log.e(TAG, "setCurrentItem: sclloX"+sclloX );
-//            tablayout.scrollBy(sclloX,0);
         }
 
         public int getCurrentItem(){
