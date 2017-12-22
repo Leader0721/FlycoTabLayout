@@ -18,12 +18,19 @@
 
         </android.support.v7.widget.RecyclerView>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:visibility="gone">
+
+        </android.support.v7.widget.RecyclerView>
+
         <View
             android:id="@+id/current_bg"
             android:layout_width="96dp"
             android:layout_height="42dp"
             android:background="@drawable/item_bg"
-            android:layout_gravity="center"
             android:visibility="gone"/>
     </FrameLayout>
 
