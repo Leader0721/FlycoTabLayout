@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.flyco.tablayoutsamples.ui.RVActivity">
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/rv_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    tools:context="com.flyco.tablayoutsamples.ui.InfinitiTabActivity">
+    <com.flyco.tablayout.InfiniteTabLayout
+        android:id="@+id/infiniteTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="#6D8FB0"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:tl_indicator_margin_left="2dp"
+        app:tl_indicator_margin_right="2dp"
+        app:tl_indicator_style="BLOCK"/>
 
-</android.support.v7.widget.RecyclerView>
-</android.support.constraint.ConstraintLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"/>
+</LinearLayout>
