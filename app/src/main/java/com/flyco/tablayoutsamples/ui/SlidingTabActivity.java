@@ -25,8 +25,7 @@ public class SlidingTabActivity extends AppCompatActivity implements OnTabSelect
     private Context mContext = this;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private final String[] mTitles = {
-            "国内","北京", "短视频", "全球","国外", "国内",
-            "北京", "短视频", "全球","国外", "国内","北京"
+            "国外","国内","北京", "短视频", "全球","国外", "国内","北京", "短视频"
     };
     private MyPagerAdapter mAdapter;
 

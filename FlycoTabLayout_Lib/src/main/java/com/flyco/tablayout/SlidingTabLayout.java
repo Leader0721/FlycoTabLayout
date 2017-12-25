@@ -319,13 +319,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
          * position:当前View的位置
          * mCurrentPositionOffset:当前View的偏移量比例.[0,1)
          */
-        int size = mViewPager.getAdapter().getCount();
-        if(position == size-1){
-            position = 1;
-        }else if(position ==0){
-            position = size-2;
-        }
-        mCurrentTab = position;
+        this.mCurrentTab = position;
         this.mCurrentPositionOffset = positionOffset;
         scrollToCurrentTab();
         invalidate();
@@ -333,9 +327,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
 
     @Override
     public void onPageSelected(int position) {
-
-        mViewPager.setCurrentItem(mCurrentTab,false);
-//        scrollToCurrentTab();
         updateTabSelection(position);
     }
 
