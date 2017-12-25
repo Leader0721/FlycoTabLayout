@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.flyco.tablayout.SlidingTabLayout;
@@ -65,6 +66,11 @@ public class SlidingTabActivity extends AppCompatActivity implements OnTabSelect
         /** indicator圆角色块 */
         SlidingTabLayout tabLayout_10 = ViewFindUtils.find(decorView, R.id.tl_10);
 
+        WindowManager wm = (WindowManager) this
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+//        tabLayout_9.setTabWidth(width*1f/5);
+
         tabLayout_1.setViewPager(vp);
         tabLayout_2.setViewPager(vp);
         tabLayout_2.setOnTabSelectListener(this);
@@ -76,7 +82,7 @@ public class SlidingTabActivity extends AppCompatActivity implements OnTabSelect
         tabLayout_8.setViewPager(vp, mTitles, this, mFragments);
         tabLayout_9.setViewPager(vp);
         tabLayout_10.setViewPager(vp);
-
+//        tabLayout_9.setScreenWidth(width);
         vp.setCurrentItem(4);
 
         tabLayout_1.showDot(4);

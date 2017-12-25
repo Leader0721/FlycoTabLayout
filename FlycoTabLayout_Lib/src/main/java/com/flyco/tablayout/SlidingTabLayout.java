@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -36,7 +35,6 @@ import java.util.Collections;
 
 /** 滑动TabLayout,对于ViewPager的依赖性强 */
 public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
-    private static final String TAG = "SlidingTabLayout";
     private Context mContext;
     private ViewPager mViewPager;
     private ArrayList<String> mTitles;
@@ -321,7 +319,13 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
          * position:当前View的位置
          * mCurrentPositionOffset:当前View的偏移量比例.[0,1)
          */
-        this.mCurrentTab = position;
+        int size = mViewPager.getAdapter().getCount();
+        if(position == size-1){
+            position = 1;
+        }else if(position ==0){
+            position = size-2;
+        }
+        mCurrentTab = position;
         this.mCurrentPositionOffset = positionOffset;
         scrollToCurrentTab();
         invalidate();
@@ -329,6 +333,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
 
     @Override
     public void onPageSelected(int position) {
+
+        mViewPager.setCurrentItem(mCurrentTab,false);
+//        scrollToCurrentTab();
         updateTabSelection(position);
     }
 
@@ -345,7 +352,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         int offset = (int) (mCurrentPositionOffset * mTabsContainer.getChildAt(mCurrentTab).getWidth());
         /**当前Tab的left+当前Tab的Width乘以positionOffset*/
         int newScrollX = mTabsContainer.getChildAt(mCurrentTab).getLeft() + offset;
-        Log.e(TAG, "scrollToCurrentTab: newScrollX——"+newScrollX+"  mCurrentTab——"+mCurrentTab+"    offset——"+offset );
+
         if (mCurrentTab > 0 || offset > 0) {
             /**HorizontalScrollView移动到当前tab,并居中*/
             newScrollX -= getWidth() / 2 - getPaddingLeft();
